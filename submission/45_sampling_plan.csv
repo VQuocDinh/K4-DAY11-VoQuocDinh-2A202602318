@@ -1,9 +1,9 @@
 camera_id,slice_type,frames,risk,rationale
-front,normal,,TODO,TODO
-front,hard,,TODO,TODO
-rear,normal,,TODO,TODO
-rear,hard,,TODO,TODO
-left,normal,,TODO,TODO
-left,hard,,TODO,TODO
-right,normal,,TODO,TODO
-right,hard,,TODO,TODO
+front,normal,25,Trung bình: vật chính giữa ảnh ít méo,Đủ mẫu để đo nền cho camera nhìn hướng di chuyển; lấy trải đều ngày/đêm và nhiều cảnh khác nhau
+front,hard,30,Cao: người đi bộ/xe hai bánh cắt ngang gần xe; vật nhỏ ở rìa,Lỗi ở front ảnh hưởng trực tiếp tới cảnh báo va chạm; ưu tiên ca đông vật và vật bị cắt ở vòng kính
+rear,normal,20,Trung bình: chủ yếu cảnh lùi/đỗ với ít vật,Ít đa dạng hơn front nên cần ít frame normal hơn
+rear,hard,25,Cao: vật thấp sát đuôi xe và vạch ô đỗ khi lùi; ego_body/cản sau che một phần,Rủi ro trong lúc đỗ/lùi; cần ca vật nhỏ gần xe và ca thiếu sáng
+left,normal,20,Trung bình: lề đường và xe song song,Cảnh hai bên lặp lại nhiều; normal đủ để kiểm scope và ignore
+left,hard,30,Cao: méo mạnh ở rìa; vùng seam góc trước-trái và sau-trái; curb và vạch ô đỗ sát xe,Seam dễ sinh hai box cho một vật; box lỏng ở rìa fisheye; cần review riêng từng góc
+right,normal,20,Trung bình: lề đường và xe song song,Cân bằng với left để so sánh hai bên
+right,hard,30,Cao: méo mạnh ở rìa; seam trước-phải/sau-phải; xe hai bánh vượt sát,Như left; thêm ca xe hai bánh vượt bên cạnh là loại dễ thiếu nhãn

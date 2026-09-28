@@ -8,11 +8,11 @@ không làm thay phần lý do.
 
 | camera_id | Hard case cần chọn | Vì sao dễ sai | Annotation space / calibration cần giữ | Cách review trước khi gọi là gold |
 |---|---|---|---|---|
-| front | TODO | TODO | TODO | TODO |
-| rear | TODO | TODO | TODO | TODO |
-| left | TODO | TODO | TODO | TODO |
-| right | TODO | TODO | TODO | TODO |
+| front | Người đi bộ/xe hai bánh cắt ngang gần xe; cụm đông vật nhỏ sát ngưỡng H=40 ở giữa-xa; xe ba bánh | Như ADASIND 258420: vật nhỏ chồng lấn dễ sót/lệch, model COCO sai class ThreeWheeler | Ảnh fisheye gốc (không undistort), tâm/bán kính vòng kính và intrinsics của camera front, timestamp | 2 annotator độc lập + 1 reviewer; so IoU/class từng vật; bất đồng đưa adjudicator quyết theo rule có `rule_id`, ghi decision log; chỉ gọi gold khi mọi bất đồng đã đóng |
+| rear | Vật thấp sát đuôi xe khi lùi, vạch ô đỗ, cản sau/ego che một phần, thiếu sáng | Vật sát xe nằm ở rìa méo mạnh, dễ lẫn với ego_body; vạch chia ô vs vạch lối xe chạy (như bài parking) | Polygon ego_body/lens_border riêng của camera rear; calibration rear; không dùng box đã chiếu sang BEV làm chuẩn | Như front + reviewer soát riêng ego_body/ignore trên từng frame vì đây là lỗi P0 (sai phạm vi) |
+| left | Vùng seam góc trước-trái/sau-trái; curb, vạch ô đỗ và xe song song sát hông; xe hai bánh vượt | Méo mạnh ở rìa làm box lỏng; vật ở seam xuất hiện cả ở camera front/rear | Ảnh gốc + extrinsics left so với front/rear để biết vùng chồng; timestamp đồng bộ | Review từng camera riêng, rồi một vòng cross-camera chỉ cho ca seam theo policy (dưới) |
+| right | Như left (seam trước-phải/sau-phải); xe hai bánh vượt sát bên phải | Như left; ca xe hai bánh vượt nhanh dễ bị bỏ sót hoặc tách rider sai (R03) | Như left, cho camera right | Như left |
 
-- Khi nào cần refresh gold set (đổi camera, calibration hoặc rule): TODO
-- Một ca seam/cross-camera cần policy và evidence trước khi ghép hai box: TODO
-- Vì sao peer agreement hoặc quality report trên ảnh một camera chưa chứng minh gold set đúng cho cả bốn camera: TODO
+- Khi nào cần refresh gold set (đổi camera, calibration hoặc rule): khi thay camera/ống kính hoặc vị trí gắn (vòng kính, ego_body đổi), khi calibration/extrinsics được đo lại, khi `rules_version` đổi ảnh hưởng tới nhãn (ví dụ R02a/R07a trong `20_guideline_patch.md` v1.1.0), khi thêm class hoặc sang miền dữ liệu mới (nước khác, đêm/mưa nhiều), hoặc khi audit định kỳ thấy tỷ lệ bất đồng trên gold tăng. Refresh = soát lại các frame bị ảnh hưởng và ghi version cho gold.
+- Một ca seam/cross-camera cần policy và evidence trước khi ghép hai box: một xe máy ở góc trước-trái xuất hiện ở rìa camera front (zone edge) và rìa camera left cùng lúc với hai box khác kích thước. Trước khi coi là một vật hoặc xoá một box cần: timestamp đồng bộ hai frame, calibration/extrinsics để chiếu hai box về cùng hệ toạ độ (BEV) và kiểm trùng vị trí, và policy output đích (giữ box trên mọi camera thấy vật, hay chỉ giữ ở camera "chủ" của vùng). Thiếu một trong ba thì gán nhãn hai box hợp lệ trên từng camera, không đánh DUPLICATE và không nối track.
+- Vì sao peer agreement hoặc quality report trên ảnh một camera chưa chứng minh gold set đúng cho cả bốn camera: ADASIND chỉ có một camera fisheye trên xe hai bánh; peer agreement chỉ cho thấy hai người **nhất quán**, không chứng minh **đúng** (C0 và B4-dense đều có ca teaching reference sai: L3, R5). Quality report ở đây đo khớp với teaching reference trên 3 frame, không phủ góc nhìn rear/left/right, vùng seam, ego_body khác nhau của từng camera hay phép chiếu BEV. Muốn gọi gold cho bốn camera cần review độc lập theo từng camera và vòng cross-camera có calibration.

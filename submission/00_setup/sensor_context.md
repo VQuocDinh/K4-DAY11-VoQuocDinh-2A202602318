@@ -1,6 +1,6 @@
 # Sensor context
 
-- TODO — Rig: mô tả ngắn xe/camera gắn ở đâu theo hiểu biết của bạn từ ảnh (ADASIND không kèm tài liệu rig chi
-  tiết, ghi theo quan sát).
-- TODO — `ego_body` nhìn thấy ở đâu trong frame (góc capo, gương, tay lái...).
-- TODO — Vòng kính (lens circle) nằm ở vị trí nào trong ảnh, chiếm khoảng bao nhiêu phần khung hình.
+- Rig: ảnh ADASIND dạng dọc 1080×1920, một camera fisheye nhìn về phía trước, gắn thấp ở phía trái của **xe hai bánh** (quan sát: tay áo caro, cẳng chân và dép của người lái xuất hiện ở góc dưới trái; frame `adasind_258420.jpg` có bóng người đi xe máy trên mặt đường bên phải). Không có tài liệu rig — độ cao và góc gắn chỉ suy từ ảnh, chưa kiểm chứng.
+- `ego_body` nhìn thấy ở **góc dưới bên trái** vòng kính: cánh tay/tay nắm lái, chân và bàn chân người lái (và phần thân xe/sàn để chân ngay dưới) — chiếm khoảng dải trái từ giữa xuống đáy vòng kính ở cả ba frame slice B4-dense (`adasind_258420`, `adasind_270517`, `adasind_310008`). Hai frame `adasind_006840.jpg` và `adasind_271039.jpg` không thấy ego nên không vẽ (R07).
+- Vòng kính: tâm lệch xuống dưới giữa khung một chút (theo `assets/frames.csv`: cx≈420–630, cy≈990–1040 px, r≈811–814 px). Đường kính ≈1.625 px lớn hơn chiều rộng ảnh 1.080 px nên vòng tròn **bị cắt ở mép trái và phải**; vành đen `lens_border` chủ yếu ở **dải trên (~0–200 px) và dải dưới (~1.830–1.920 px)** cùng bốn góc. Vòng kính chiếm toàn bộ chiều rộng và khoảng 85% chiều cao khung.
+- Giới hạn: ADASIND chỉ có **một** camera fisheye trên xe hai bánh, không đại diện rig bốn camera SVM (front/rear/left/right) của bài lập kế hoạch; vùng méo mạnh nằm sát vòng kính, nơi box dễ lỏng nhất.

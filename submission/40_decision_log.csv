@@ -1,1 +1,7 @@
 id,date,question,decision,rationale,status
+D02,2026-09-28,258420 L3 xe máy xa có trong L nhưng reference thiếu: sửa nhãn hay escalate?,Giữ L3 và escalate sửa teaching reference (30_escalation_ticket.md),Vật cao 47 px ≥ H=40 nhìn thấy rõ trên ảnh (screenshots/02_258420_L3_vs_R.png); R01 yêu cầu box; bất đồng với reference không tự động là lỗi người gán,escalated
+D03,2026-09-28,258420 L9 Car lệch với R5: sửa theo reference?,Giữ L9 không sửa,L9 và model M6 trùng ranh giới xe con trắng; R5 hẹp và lệch xuống; ghi E0_reference_defect P2,accepted
+D04,2026-09-28,258420 L4 Truck bị che (QA r2 nêu; R và M đều không có): xoá hay giữ?,Giữ và ghi E5_unresolved,Trên ảnh có khối xe tối màu nhưng không thấy cabin/thùng; chưa đủ bằng chứng xoá hay đổi class; cần frame lân cận hoặc ảnh gốc,accepted
+D05,2026-09-28,Rework ca nào?,"Chỉ thêm Pedestrian R7 (258420 ≈(92,792)-(109,843)); không đụng ca E0/E5","Chỉ ca action=rework severity P1 có căn cứ; delta mid missing 2→1, matched 5→6",accepted
+D06,2026-09-28,Bản r1_craft khóa từ export job nên selfqc báo thiếu raw_fisheye: khóa lại?,Không relock,Tên task trong CVAT đúng; export job không chứa tên task; nhãn không đổi nên relock không thêm giá trị,accepted
+D07,2026-09-28,Người lái xe ego (tay/chân) có thuộc ego_body?,"Có — vẽ trong polygon ego_body, không box Pedestrian",Teaching reference C0 cũng tính vùng này là ego_body; R07 chưa nói rõ -> đề xuất R07a trong 20_guideline_patch.md,accepted

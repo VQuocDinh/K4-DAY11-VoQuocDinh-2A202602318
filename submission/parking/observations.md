@@ -1,6 +1,6 @@
 # Quan sát vạch ô đỗ
 
-- Hai vạch `parking_line` đã vẽ (mô tả vị trí trong ảnh): TODO
-- Một vạch/dấu sơn hoặc biên **không** vẽ, và vì sao: TODO
-- Polygon `free_space` dừng ở đâu; có phần bị che nào không: TODO
-- Ca chưa chắc cần hỏi người soát (nếu không có, ghi “không có”): TODO
+- Hai vạch `parking_line` đã vẽ (mô tả vị trí trong ảnh): 8 polyline trên các vạch sơn **chéo** chia ô đỗ xiên. 4 vạch ở dãy gần camera — rõ nhất là vạch giữa-dưới (407,652)→(531,720) và vạch phải-dưới (698,622)→(960,685), cùng đoạn ngắn mép trái (29,681)→(26,720) và mép phải (921,597)→(960,602). 4 vạch ở dãy giữa, chỉ lấy phần sơn **nằm dưới vạch ngang**: (55,540)→(47,570), (198,536)→(247,562), (331,531)→(417,554), (446,525)→(573,544). Mỗi đoạn dừng ở chỗ sơn kết thúc hoặc mép ảnh, không nối qua phần không thấy.
+- Một vạch/dấu sơn hoặc biên **không** vẽ, và vì sao: **vạch ngang dài** chạy suốt bề ngang bãi (≈(0,541)→(960,515)). Nó là đường giữa của hai dãy ô xiên quay lưng vào nhau — ranh giới **đầu ô**, không tách hai ô liền kề nên không phải `parking_line`. Cũng không vẽ các dãy ô ở xa (y < 510) vì sơn bị cháy sáng, không xác định được đầu/cuối vạch.
+- Polygon `free_space` dừng ở đâu; có phần bị che nào không: polygon bao **lối xe chạy gần camera** giữa dãy giữa và dãy gần: cạnh trên đi sát đầu dưới các vạch dãy giữa (≈y 577 bên trái → y 524 bên phải), cạnh dưới dừng ở đầu trên các vạch dãy gần (≈(395,650), (960,591)), hai bên chạm mép ảnh. Không có xe/curb/vật cản trong vùng; chiếc xe duy nhất (YOLO tìm thấy ≈(193,454)–(221,479)) nằm ở xa, ngoài polygon. Phần mặt bãi xa không đưa vào vì chói sáng. Đây là vùng trống nhìn thấy trên ảnh tĩnh, không phải vùng lái an toàn.
+- Ca chưa chắc cần hỏi người soát (nếu không có, ghi “không có”): các vệt chéo của dãy giữa kéo dài **qua** vạch ngang (ví dụ ≈(170,520)→(197,536) phía trên vạch (198,536)→(247,562)). Mình chỉ vẽ phần dưới; cần người soát xác nhận có nên vẽ phần trên thành polyline riêng (chia ô của dãy phía xa) hay không.

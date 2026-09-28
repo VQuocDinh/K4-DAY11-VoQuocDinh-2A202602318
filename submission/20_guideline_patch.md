@@ -1,0 +1,7 @@
+# Guideline patch
+
+- **Rule mới đề xuất:** **R02a — Box vật bị che một phần:** box chỉ bao **phần nhìn thấy** của vật trên ảnh gốc, **không** ước lượng kéo dài sang phần bị vật khác che; bật `occluded=true`. Nếu phần nhìn thấy < H=40 thì áp R01 (không box). Ví dụ: C0 `adasind_019560.jpg` — xe ba bánh đỏ nâu bị xe máy có người lái che: L6 dừng ở x≈426 (phần thấy), reference R5 kéo tới x≈457 (sang phần khuất), lệch ~31 px dù vẫn IoU≈0.65. Bổ sung **R07a:** tay/chân/thân người lái xe ego nhìn thấy trong khung được tính vào polygon `ego_body` (C0 và B4-dense: tay áo caro, chân, dép ở góc dưới trái), không box `Pedestrian`.
+- **Áp dụng cho:** box của cả 6 class khi `occluded=true`; `ignore_region.reason=ego_body` (tập con 6 class động của lab, không phải toàn bộ taxonomy ADASIND).
+- **Vì sao luật hiện tại (`docs/02-rules-vi.md`) không đủ:** R02 chỉ nói "bám phần nhìn thấy" trong ngữ cảnh méo fisheye, không nói trường hợp vật bị **vật khác** che; R05 chỉ định nghĩa attribute `occluded` mà không nói ảnh hưởng tới hình học box. Kết quả là người gán và reference chọn hai cách khác nhau cho cùng một vật (finding calib `L6+R5`, `E2_guideline_gap`). R07 định nghĩa ego là "thân xe/gương/tay lái" nhưng không nói người lái xe hai bánh; model pre-label còn box người lái ego thành Pedestrian (258420 M1, 310008 M5).
+- **`rules_version` mới:** v1.0.0 → v1.1.0
+- **Hiệu lực từ:** round kế tiếp sau `rework` (không sửa ngược các bản đã khóa `calib`, `r1_craft`); teaching reference cần soát lại R5 C0 và R5 B4-dense theo R02a.
